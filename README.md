@@ -13,6 +13,7 @@
 | endY | Number | 必填 | lineTo y坐标 |
 | style | Object | 可选 | 样式 |
 | beginPath | String | 可选 | 是否beginPath |
+
 举例：
 ```javascript
 var pb = new Paintbrush(canvas);
