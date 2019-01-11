@@ -1,4 +1,4 @@
-## Painrbrush我的画笔
+## Paintbrush我的画笔
 ### new Paintbrush(canvas)
 | 形参 | 类型 | 是否必填 | 描述 |
 | ------ | ------ | ------ | ------ |
