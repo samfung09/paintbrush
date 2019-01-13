@@ -16,6 +16,7 @@ function Paintbrush(canvas){
 Paintbrush.prototype.clearRect = function(startX, startY, w, h){
     this.ctx.clearRect(startX, startY, w, h);
 }
+
 /**
  * @param {number} angle 角度
  * @method 角度转弧度
@@ -25,21 +26,36 @@ Paintbrush.prototype._a2r = function(angle){
     return angle * Math.PI/180;
 }
 
-Paintbrush.prototype.drawLine = function(startX, startY, endX, endY, style, beginPath){
+/**
+ * @param {Number} startX 起始x坐标
+ * @param {Number} startY 起始y坐标
+ * @param {Array} coordinates lineTo()坐标集合
+ * @param {Object} style 样式
+ * @param {String} beginPath 是否beginPath
+ * @method 画线
+ */
+Paintbrush.prototype.drawLine = function(startX, startY, coordinates, style, beginPath){
     // 如果没传参，则报错
-    if(arguments.length < 4) throw new Error('有些参数是必填的');
-    var ctx = this.ctx;
-    // 是否beginPath()
-    if(arguments[arguments.length - 1] === 'beginPath') ctx.beginPath();
-    // 如果需要设置样式
-    if(typeof style === 'object'){
-        Object.keys(style).forEach(key => {
-            ctx[key] = style[key];
-        })
+    if(arguments.length < 3) throw new Error('有些参数是必填的');
+    // coordinates必须传入一个坐标数组，否则不绘画
+    if(Object.prototype.toString.call(coordinates) === '[object Array]'){
+        var ctx = this.ctx;
+        // 是否beginPath()
+        if(arguments[arguments.length - 1] === 'beginPath') ctx.beginPath();
+        // 如果需要设置样式
+        if(typeof style === 'object'){
+            Object.keys(style).forEach(key => {
+                ctx[key] = style[key];
+            })
+        }
+        // 开始画线
+        ctx.moveTo(startX, startY);
+        var n = Math.floor(coordinates.length/2);
+        for(var i=0; i<n; i++){
+            ctx.lineTo(coordinates[i*2], coordinates[i*2+1]);
+        }
+        ctx.stroke();
     }
-    ctx.moveTo(startX, startY);
-    ctx.lineTo(endX, endY);
-    ctx.stroke();
 }
 
 /**
