@@ -103,5 +103,51 @@ Paintbrush.prototype.drawRect = function(startX, startY, w, h, isFill, style, tr
 }
 
 
+Paintbrush.prototype.drawArc = function(cX, cY, r, startAngle, endAngle, isFan, isClosePath, isFill, style, transform, beginPath){
+    if(arguments.length < 8) throw new Error('有些参数是必填的');
+    var ctx = this.ctx;
+    // 如果画布需要变化
+    if(transform !== null && typeof transform === 'object'){
+        ctx.save();
+        if(transform.translate){
+            ctx.translate.apply(ctx, transform.translate);
+        }
+        if(transform.scale){
+            ctx.scale.apply(ctx, transform.scale);
+        }
+        if(transform.rotate){
+            var arr = transform.rotate;
+            cX = cX - arr[0];
+            cY = cY - arr[1];
+            ctx.translate(arr[0], arr[1]);
+            ctx.rotate(this._a2r(arr[2]));
+        }
+    }
+    // 是否beginPath()
+    if(arguments[arguments.length - 1] === 'beginPath') ctx.beginPath();
+    // 如果需要设置样式
+    if(style !== null && typeof style === 'object'){
+        Object.keys(style).forEach(key => {
+            ctx[key] = style[key];
+        })
+    }
+    // 如果是画扇形
+    if(isFan){
+        ctx.moveTo(cX, cY);
+        ctx.arc(cX, cY, r, this._a2r(startAngle), this._a2r(endAngle));
+        ctx.closePath();
+        isFill ? ctx.fill() : ctx.stroke();
+    }else{  // 否则是画圆或圆弧
+        ctx.arc(cX, cY, r, this._a2r(startAngle), this._a2r(endAngle));
+        // 圆弧是否闭合路径
+        if(isClosePath) ctx.closePath();
+        isFill ? ctx.fill() : ctx.stroke();
+
+    }
+    if(transform !== null && typeof transform === 'object'){
+        ctx.restore();
+    }
+}
+
 // var pb = new Paintbrush(canvas);
 // pb.drawLine()
