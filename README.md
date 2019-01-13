@@ -68,3 +68,15 @@ pb.drawRect(50, 50, 200, 100, false, {
 | style | Object | 可选 | 样式 |
 | transform | Object | 可选 | 变换，如果传入该参数，那么前一个形参style就是必填的 |
 | beginPath | String | 可选 | 是否beginPath，传入'beginPath'或者不传 |
+
+举例：
+```javascript
+var pb = new Paintbrush(canvas);
+pb.drawArc(100, 100, 60, 0, 60, true, false, false)
+pb.drawArc(100, 100, 60, 0, 60, true, false, false, {
+    strokeStyle: 'violet'
+}, {
+    rotate: [100, 100, 90]
+}, 'beginPath')
+```
+![image](https://github.com/samfung09/paintbrush/blob/master/images/drawArc.png)
