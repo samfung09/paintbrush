@@ -63,7 +63,7 @@ pb.drawRect(50, 50, 200, 100, false, {
 | startAngle | Number | 必填 | 起始角度 |
 | endAngle | Number | 必填 | 结束角度 |
 | isFan | boolean | 必填 | 是否为扇形 |
-| isClosePath | boolean | 必填 | 是否关闭路径 |
+| isClosePath | boolean | 必填 | 是否闭合路径 |
 | isFill | boolean | 必填 | 是否填充 |
 | style | Object | 可选 | 样式 |
 | transform | Object | 可选 | 变换，如果传入该参数，那么前一个形参style就是必填的 |
@@ -80,3 +80,26 @@ pb.drawArc(100, 100, 60, 0, 60, true, false, false, {
 }, 'beginPath')
 ```
 ![image](https://github.com/samfung09/paintbrush/blob/master/images/drawArc.png)
+
+### 画多边形drawPolygon(startX, startY, coordinates, isFill, style, transform, beginPath)
+| 形参 | 类型 | 是否必填 | 描述 |
+| ------ | ------ | ------ | ------ |
+| startX | Number | 必填 | 起始x坐标 |
+| startY | Number | 必填 | 起始y坐标 |
+| coordinates | Array | 必填 | 一个或多个lineTo坐标集合 |
+| isFill | boolean | 必填 | 是否填充 |
+| style | Object | 可选 | 样式 |
+| transform | Object | 可选 | 变换，如果传入该参数，那么前一个形参style就是必填的 |
+| beginPath | String | 可选 | 是否beginPath，传入'beginPath'或者不传 |
+
+举例：
+```javascript
+var pb = new Paintbrush(canvas);
+pb.drawPolygon(100, 100, [200, 200, 100, 200], false)
+pb.drawPolygon(100, 100, [200, 200, 100, 200], false, {
+    strokeStyle: 'red'
+}, {
+    rotate: [100, 200, 30]
+}, 'beginPath')
+```
+![image](https://github.com/samfung09/paintbrush/blob/master/images/drawPolygon.png)
